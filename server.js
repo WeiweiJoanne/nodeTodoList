@@ -1,5 +1,15 @@
 const http = require("http")
-// console.log(http);
+const { v4: uuidv4 } = require('uuid');
+const data = [
+  {
+    "title":"刷牙",
+    "id": uuidv4()
+  },
+  {
+    "title": "洗臉",
+    "id": uuidv4()
+  }
+]
 const requestListener = (req, res) => {
   const headers = {
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With',
@@ -9,12 +19,13 @@ const requestListener = (req, res) => {
   }
   
   console.log(req.url);
-  if (req.url == "/" && req.method == "GET") {
+  if (req.url == "/todos" && req.method == "GET") {
     res.writeHead(200, headers);
     res.write(JSON.stringify({
       "status":"success",
-      "data":[]
-    }))
+      "data": data
+    }));
+    console.log("getData");
   } else if (req.method == "OPTIONS") {
     res.writeHead("200", headers)
   } else {
