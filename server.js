@@ -1,6 +1,7 @@
 const http = require("http")
 const { v4: uuidv4 } = require('uuid');
 const todos = []
+console.log("start");
 const requestListener = (req, res) => {
   const headers = {
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With',
@@ -25,18 +26,38 @@ const requestListener = (req, res) => {
   } else if (req.url == "/todos" && req.method == "POST") {
 
     req.on("end", () => {
-      res.writeHead(200, headers);
-      const title = JSON.parse(body).title
-      console.log(title);
-      todos.push({
-        "title": title,
-        "id": uuidv4()
-      })
-      res.write(JSON.stringify({
-        "status": "success",
-        "data": todos
-      }));
-      res.end()
+
+      try {
+        res.writeHead(200, headers);
+        const title = JSON.parse(body).title
+        if (title !== undefined ){
+          todos.push({
+            "title": title,
+            "id": uuidv4()
+          })
+          res.write(JSON.stringify({
+            "status": "successful",
+            "data": todos
+          }));
+          res.end()
+        }else{
+          res.writeHead(400, headers)
+          res.write(JSON.stringify({
+            "status": "failed",
+            "message": "欄位填寫錯誤"
+          }))
+          res.end()
+        }
+       
+      } catch (error) {
+        res.writeHead(400, headers)
+        res.write(JSON.stringify({
+          "status": "failed",
+          "message":"欄位填寫錯誤"
+        }))
+        res.end()
+      }
+
     });
 
   } else if (req.method == "OPTIONS") {
@@ -51,7 +72,6 @@ const requestListener = (req, res) => {
     res.end()
   }
 
-  // res.end()
 }
 const server = http.createServer(requestListener)
 server.listen(3005)
