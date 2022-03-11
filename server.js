@@ -24,8 +24,6 @@ const requestListener = (req, res) => {
     res.end()
   } else if (req.url == "/todos" && req.method == "POST") {
 
-
-
     req.on("end", () => {
       res.writeHead(200, headers);
       const title = JSON.parse(body).title
@@ -38,7 +36,6 @@ const requestListener = (req, res) => {
         "status": "success",
         "data": todos
       }));
-      console.log("second end");
       res.end()
     });
 
