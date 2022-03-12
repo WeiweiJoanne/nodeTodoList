@@ -41,7 +41,8 @@ const requestListener = (req, res) => {
     res.writeHead("200", headers)
     res.write(JSON.stringify({
       "status": "successful",
-      "data": todos
+      "data": todos,
+      "message": "刪除一筆資料成功"
     }));
 
     res.end()
@@ -76,7 +77,8 @@ const requestListener = (req, res) => {
         if (title !== undefined) {
           todos.push({
             "title": title,
-            "id": uuidv4()
+            "id": uuidv4(),
+            "message": "新增一筆資料成功"
           })
           res.write(JSON.stringify({
             "status": "successful",
