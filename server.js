@@ -1,5 +1,6 @@
 const http = require("http")
 const { v4: uuidv4 } = require('uuid');
+const errorHaddle = require('./errorHandle');
 const todos = []
 console.log("start");
 const requestListener = (req, res) => {
@@ -41,21 +42,11 @@ const requestListener = (req, res) => {
           }));
           res.end()
         }else{
-          res.writeHead(400, headers)
-          res.write(JSON.stringify({
-            "status": "failed",
-            "message": "欄位填寫錯誤"
-          }))
-          res.end()
+          errorHaddle(res)
         }
        
       } catch (error) {
-        res.writeHead(400, headers)
-        res.write(JSON.stringify({
-          "status": "failed",
-          "message":"欄位填寫錯誤"
-        }))
-        res.end()
+        errorHaddle(res)
       }
 
     });
