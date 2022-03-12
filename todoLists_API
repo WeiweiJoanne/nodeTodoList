@@ -1,0 +1,93 @@
+{
+	"variables": [],
+	"info": {
+		"name": "todoLists - Heroku",
+		"_postman_id": "d262396c-1103-5ba1-b77a-8b8bdccd4130",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "取得所有待辦事項",
+			"request": {
+				"url": "https://damp-ocean-54928.herokuapp.com/todos",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "新增一筆待辦事項",
+			"request": {
+				"url": "https://damp-ocean-54928.herokuapp.com/todos",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\":\"今天要唸書\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "刪除所有待辦事項",
+			"request": {
+				"url": "https://damp-ocean-54928.herokuapp.com/todos",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "刪除單筆待辦事項",
+			"request": {
+				"url": "https://damp-ocean-54928.herokuapp.com/todos/e6f63a6c-804f-488d-97da-58bbc3181c98",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "修改一筆待辦事項",
+			"request": {
+				"url": "https://damp-ocean-54928.herokuapp.com/todos/",
+				"method": "PATCH",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
