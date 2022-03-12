@@ -24,6 +24,15 @@ const requestListener = (req, res) => {
       "data": todos
     }));
     res.end()
+  }else if(req.url == "/todos" && req.method == "DELETE"){
+    todos.length = 0;
+    res.writeHead(200, headers);
+    res.write(JSON.stringify({
+      "status": "success",
+      "data": todos,
+      "message": "Delete all"
+    }));
+    res.end()
   } else if (req.url == "/todos" && req.method == "POST") {
 
     req.on("end", () => {
