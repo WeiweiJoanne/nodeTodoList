@@ -24,7 +24,7 @@ const requestListener = (req, res) => {
       "data": todos
     }));
     res.end()
-  }else if(req.url == "/todos" && req.method == "DELETE"){
+  } else if (req.url == "/todos" && req.method == "DELETE") {
     todos.length = 0;
     res.writeHead(200, headers);
     res.write(JSON.stringify({
@@ -33,14 +33,24 @@ const requestListener = (req, res) => {
       "message": "Delete all"
     }));
     res.end()
+  } else if (req.url.startsWith("/todos/") && req.method == "DELETE") {
+    const id = req.url.split("/").pop() //刪除陣列最後一個元素，並回傳值
+    const index = todos.findIndex(el => el.id == id) //取符合條件元素的所在陣列索引
+    todos.splice(index, 1) //index 刪除陣列位置, 1 為index開始後欲刪除的總數
+    res.writeHead("200", headers)
+    res.write(JSON.stringify({
+      "status": "successful",
+      "data": todos
+    }));
+
+    res.end()
   } else if (req.url == "/todos" && req.method == "POST") {
 
     req.on("end", () => {
-
       try {
         res.writeHead(200, headers);
         const title = JSON.parse(body).title
-        if (title !== undefined ){
+        if (title !== undefined) {
           todos.push({
             "title": title,
             "id": uuidv4()
@@ -50,10 +60,10 @@ const requestListener = (req, res) => {
             "data": todos
           }));
           res.end()
-        }else{
+        } else {
           errorHaddle(res)
         }
-       
+
       } catch (error) {
         errorHaddle(res)
       }
