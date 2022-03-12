@@ -1,5 +1,6 @@
 const http = require("http")
 const { v4: uuidv4 } = require('uuid');
+const errorHandle = require("./errorHandle");
 const errorHaddle = require('./errorHandle');
 const todos = []
 console.log("start");
@@ -44,6 +45,28 @@ const requestListener = (req, res) => {
     }));
 
     res.end()
+  } else if (req.url.startsWith("/todos/") && req.method == "PATCH") {
+    const id = req.url.split("/").pop()
+    const index = todos.findIndex(el => el.id == id)
+    req.on("end", () => {
+      try {
+        const title = JSON.parse(body).title
+        if (title !== undefined){
+          todos[index].title = title
+          res.writeHead(200, headers)
+          res.write(JSON.stringify({
+            "status": "successful",
+            "data": todos,
+            "message":"修改一筆資料成功"
+          }))
+          res.end()
+        }else{
+          errorHaddle(res)
+        }
+      } catch (error) {
+        errorHaddle(res)
+      }
+    })
   } else if (req.url == "/todos" && req.method == "POST") {
 
     req.on("end", () => {
